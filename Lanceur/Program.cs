@@ -137,9 +137,14 @@ namespace Lanceur
                 {
                     if (File.Exists(psexec))
                     {
+                        string argPsexec = @"\\"+serveurDest.Replace("%codehex%", codehex) + " -S -ACCEPTEULA " + linkDestSource + programExec;
+                        if (args.Length==3)
+                        {
+                            argPsexec = @"\\" + serveurDest.Replace("%codehex%", codehex) + " -u "+args[1]+" -p "+args[2]+" -ACCEPTEULA " + linkDestSource + programExec;
+                        }
                         Process p = new Process();
                         p.StartInfo.FileName = psexec;
-                        p.StartInfo.Arguments = @"\\"+serveurDest.Replace("%codehex%", codehex) + " -S -ACCEPTEULA " + linkDestSource + programExec;
+                        p.StartInfo.Arguments =argPsexec ;
                         p.StartInfo.UseShellExecute = false;
                         p.StartInfo.RedirectStandardOutput = true;
                         p.Start();
